@@ -1,0 +1,44 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 40vh;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mensage {
+  font-size: 28px;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; 
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 100px);
+  gap: 10px;
+  justify-content: center;
+}
+
+button {
+  padding: 10px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: cadetblue;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+
+button:hover {
+  background-color: #3a7e8c;
+}
