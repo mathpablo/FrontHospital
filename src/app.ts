@@ -1,11 +1,24 @@
 import * as angular from 'angular';
+import 'angular-ui-router';
 
-interface MeuScope extends angular.IScope {
-  mensagem: string;
-}
+import { homePageModule } from './homepage/index';
 
-const app = angular.module('meuApp', []);
+const app = angular.module('meuApp', [
+  'ui.router',
+  homePageModule.name
+]);
 
-app.controller('MeuController', ['$scope', ($scope: MeuScope) => {
-  $scope.mensagem = 'Olá, AngularJS com TypeScript!';
-}]);
+app.config([
+  '$stateProvider',
+  '$urlRouterProvider',
+  ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) => {
+    $stateProvider.state('home', {
+      url: '/home',
+      templateUrl: 'src/homepage/homepage.html',
+      controller: 'HomePageController',
+      controllerAs: 'vm'
+    });
+
+    $urlRouterProvider.otherwise('/home');
+  }
+]);

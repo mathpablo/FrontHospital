@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "build": "webpack",
-  "start": "webpack --watch"
-},
+    "build": "webpack",
+    "start": "webpack --watch"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/angular-ui-router": "^1.1.44",
     "angular": "^1.8.3"
   },
   "devDependencies": {
