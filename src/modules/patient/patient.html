@@ -1,1 +1,48 @@
-<a>Tela paciente</a>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastra De Paciente</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <link rel="stylesheet" href="patient.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Cadastro de Paciente</h1>
+
+        <form id="pacienteForm" novalidate>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required placeholder="Digite o nome completo">
+
+            <label for="dataNascimento">Data de Nascimento:</label>
+            <input type="text" id="dataNascimento" name="dataNascimento" required placeholder="DD/MM/AAAA">
+
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <h2>Pacientes Cadastrados</h2>
+        <ul id="listarPacientes"></ul>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="patient.js"></script>
+
+    <script>
+
+        Inputmask("99/99/9999").mask("#dataNascimento");
+
+        flatpickr("#dataNascimento", {
+            dateFormat: "d/m/y",
+            allowInput: true,
+            maxDate: "today"
+        });
+    
+    </script>
+    
+</body>
+</html>

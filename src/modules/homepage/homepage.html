@@ -7,19 +7,18 @@
   <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
-  <div class="header"> 
-    <h1 class="hospital-name"> Hospital Vida e Saúde</h1> 
-    <p class="mensage">Bem-vindo ao centro de atendimento</p>
-  </div>
+<div class="header"> 
+  <h1 class="hospital-name">Hospital Vida e Saúde</h1> 
+  <p class="mensage">Bem vindo ao centro de atendimento</p>
+</div>
 
-  <div class="buttons">
-    <button onclick="navigate ('alas')">Alas</button>
-    <button onclick="navigate ('internações')">Internações</button>
-    <button onclick="navigate ('leitos')">Leitos</button>
-    <button onclick="navigate ('paciente')">Paciente</button>  
-    <button onclick="navigate ('Quartos')">Quartos</button>
-  </div>
+<div class="buttons">
+  <button ng-click="vm.navigate('alas')">Alas</button>
+  <button ng-click="vm.navigate('internações')">Internações</button>
+  <button ng-click="vm.navigate('leitos')">Leitos</button>
+  <button ng-click="vm.navigate('paciente')">Paciente</button>  
+  <button ng-click="vm.navigate('Quartos')">Quartos</button>
+</div>
 
-  <script src="homepage.js"></script>
-</body>
-</html>
+<script src="homepage.js"></script>
+

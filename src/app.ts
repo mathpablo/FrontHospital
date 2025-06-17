@@ -1,7 +1,7 @@
 import * as angular from 'angular';
-import 'angular-ui-router';
+import '@uirouter/angularjs';
 
-import { homePageModule } from './homepage/index';
+import { homePageModule } from './modules/homepage/app';
 
 const app = angular.module('meuApp', [
   'ui.router',
@@ -11,10 +11,10 @@ const app = angular.module('meuApp', [
 app.config([
   '$stateProvider',
   '$urlRouterProvider',
-  ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) => {
+  ($stateProvider: any, $urlRouterProvider: any) => {
     $stateProvider.state('home', {
       url: '/home',
-      templateUrl: 'src/homepage/homepage.html',
+      templateUrl: 'src/modules/homepage/homepage.html',
       controller: 'HomePageController',
       controllerAs: 'vm'
     });

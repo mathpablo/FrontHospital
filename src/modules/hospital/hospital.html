@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Hospitais</title>
+     <link rel="stylesheet" href="hospital.css">
 </head>
 <body>
-    
+    <div class="container">
+    <h1 >Cadastro de Hospitais</h1>
+
+    <form id="hospitalForm" novalidate>
+    <label for="nome">Nome do hospital</label>
+    <input type="text" id="none" required placeholder="Digite o nome do hospital">
+
+    <button type="submit">Cadastrar</button>
+    </form>
+
+    <h2>Hospitais cadastrados</h2>
+    <ul id="listarHospitais"></ul>
+    </div>
+
+    <script src="hospital.js"></script>
 </body>
 </html>

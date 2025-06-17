@@ -1,7 +1,11 @@
 export class HomePageController {
-  mensagem: string;
+  message: string;
 
   constructor() {
-    this.mensagem = 'Bem-vindo à Home Page!';
+    this.message = "Bem vindo ao Hospital Vida e Saúde";
+  }
+
+  navigate(destino: string) {
+    console.log(`Navegando para: ${destino}`);
   }
 }
