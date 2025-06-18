@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR" ng-app="hospitalModule" ng-controller="HospitalController as vm">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Hospitais</title>
-     <link rel="stylesheet" href="hospital.css">
+    <title>Cadastro de Hospital</title>
+    <link rel="stylesheet" href="hospital.css">
 </head>
 <body>
+
+    <h1>{{ vm.titulo }}</h1>
+
     <div class="container">
-    <h1 >Cadastro de Hospitais</h1>
+        <form ng-submit="vm.adicionarHospital()">
+            <label>Nome do Hospital:</label>
+            <input type="text" ng-model="vm.novoHospital.nome" placeholder="Digite o nome">
 
-    <form id="hospitalForm" novalidate>
-    <label for="nome">Nome do hospital</label>
-    <input type="text" id="none" required placeholder="Digite o nome do hospital">
+            <button type="submit">Cadastrar</button>
+        </form>
 
-    <button type="submit">Cadastrar</button>
-    </form>
-
-    <h2>Hospitais cadastrados</h2>
-    <ul id="listarHospitais"></ul>
+        <h2>Hospitais Cadastrados</h2>
+        <ul>
+            <li ng-repeat="hospital in vm.hospitais">
+                {{ hospital.nome }} - 
+            </li>
+        </ul>
     </div>
 
-    <script src="hospital.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+    <script src="../../../dist/bundle.js"></script> 
 </body>
 </html>

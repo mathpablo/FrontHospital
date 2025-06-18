@@ -3,6 +3,7 @@ html, body {
   padding: 0;
   font-family: Arial, sans-serif;
   background: linear-gradient(90deg, rgb(83, 163, 255),#b3e5fc, white );
+  height: 100%;
 }
 
 body{
@@ -13,20 +14,60 @@ body{
     padding-top: 30px;
 }
 
+.header{
+    text-align: center;
+}
+
 .buttons{
     display: grid;
-    grid-template-columns: repeat(5, 100px);
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
     justify-content: center;
+    width: 80%;
+    max-width: 600px;
 }
 
 button{
-    padding: 10px 10px;
+    padding: 4px 4px;
     font-size: 14px;
     border: none;
     border-radius: 8px;
     background-color: #0077b6;
     color: white;
     cursor: pointer;
-    transition: background-color 0.4s;
+    transition: background-color 0.4s, transform 0.2s;
     
+}
+
+button:hover{
+    background-color: #005f8c;
+    transform: translateY(-2px);
+}
+
+.container{
+    max-width: 600px;
+    width: 90%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, alph0.2);
+}
+
+form label{
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+
+li{
+    background-color: #f1f1f1;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 6px;
 }

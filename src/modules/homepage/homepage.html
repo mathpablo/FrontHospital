@@ -1,24 +1,32 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" ng-app="meuApp" >
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Central de Atendimento</title>
-  <link rel="stylesheet" href="homepage.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Central de Atendimento</title>
+  <link rel="stylesheet" href="src/modules/homepage/homepage.css" />
 </head>
-<body>
-<div class="header"> 
-  <h1 class="hospital-name">Hospital Vida e Saúde</h1> 
-  <p class="mensage">Bem vindo ao centro de atendimento</p>
+<body ng-controller="HomePageController as vm">
+<div>
+  <div class="header"> 
+    <h1 class="hospital-name">Hospital Vida e Saúde</h1> 
+    <p class="mensage">{{ vm.message }}</p>
+  </div>
+
+  <div class="buttons">
+    <button ng-click="vm.navigate('alas')">Alas</button>
+    <button ng-click="vm.navigate('hospitais')">Hospital</button>
+    <button ng-click="vm.navigate('internações')">Internações</button>
+    <button ng-click="vm.navigate('leitos')">Leitos</button>
+    <button ng-click="vm.navigate('paciente')">Paciente</button>  
+    <button ng-click="vm.navigate('quartos')">Quartos</button>
+  </div>
 </div>
 
-<div class="buttons">
-  <button ng-click="vm.navigate('alas')">Alas</button>
-  <button ng-click="vm.navigate('internações')">Internações</button>
-  <button ng-click="vm.navigate('leitos')">Leitos</button>
-  <button ng-click="vm.navigate('paciente')">Paciente</button>  
-  <button ng-click="vm.navigate('Quartos')">Quartos</button>
-</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+<script src="dist/homepage.controller.js"></script>
+<script src="dist/homepage.js"></script>
+<script src="dist/app.js"></script>
 
-<script src="homepage.js"></script>
-
+</body>
+</html>
