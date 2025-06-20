@@ -15,7 +15,7 @@ body{
 }
 
 .header{
-    text-align: center;
+   text-align: center; 
 }
 
 .buttons{
@@ -32,14 +32,13 @@ button{
     font-size: 14px;
     border: none;
     border-radius: 8px;
-    background-color: #acacac;
+    background-color: #0077b6;
     color: white;
     cursor: pointer;
     transition: background-color 0.4s, transform 0.2s;
-    
 }
 
-button:hover{
+button :hover{
     background-color: #005f8c;
     transform: translateY(-2px);
 }
@@ -50,48 +49,5 @@ button:hover{
     background-color: white;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, alph0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, alpha.2s);
 }
-
-form label{
-    width: 100%;
-    padding: 8px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-}
-
-ul{
-    list-style: none;
-    padding: 0;
-}
-
-li{
-    background-color: #f1f1f1;
-    margin-bottom: 8px;
-    padding: 8px;
-    border-radius: 6px;
-}
-
-.hospital-item{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-}
-
-.hospital-item button{
-    background-color: #d9534f;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.hospital-item button :hover{
-    background-color: #c9302c;
-}
-
-
-

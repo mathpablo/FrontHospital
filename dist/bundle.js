@@ -49902,7 +49902,7 @@ var HomePageController = /** @class */ (function () {
                 window.location.href = '/src/modules/patient/patient.html';
                 break;
             case 'quartos':
-                window.location.href = 'quartos.html';
+                window.location.href = '/src/modules/quarto/quarto.html';
                 break;
             case 'hospitais':
                 window.location.href = '/src/modules/hospital/hospital.html';
@@ -49956,12 +49956,12 @@ var HospitalController = /** @class */ (function () {
         this.$http = $http;
         this.titulo = 'Cadastro de Hospitais';
         this.hospitais = [];
-        this.novoHospital = { nome: '' };
+        this.novoHospital = { name: '' };
         this.listarHospitais();
     }
     HospitalController.prototype.listarHospitais = function () {
         var _this = this;
-        this.$http.get('http://localhost:8080/hospitais')
+        this.$http.get('http://localhost:8080/hospitais/listar-hospitais')
             .then(function (response) {
             _this.hospitais = response.data;
         })
@@ -49969,16 +49969,30 @@ var HospitalController = /** @class */ (function () {
             console.error('Erro ao buscar hospitais:', error);
         });
     };
-    HospitalController.prototype.cadastrarHospital = function () {
+    HospitalController.prototype.adicionarHospital = function () {
         var _this = this;
-        this.$http.post('http://localhost:8080/hospitais', this.novoHospital)
+        console.log(this.novoHospital);
+        this.$http.post('http://localhost:8080/hospitais/create', this.novoHospital)
             .then(function () {
-            _this.novoHospital = { nome: '' };
+            _this.novoHospital = { name: '' };
             _this.listarHospitais();
         })
             .catch(function (error) {
             console.error('Erro ao cadastrar hospital:', error);
         });
+    };
+    HospitalController.prototype.deletarHospital = function (id) {
+        var _this = this;
+        if (confirm('Tem certeza que deseja excluir este hospital?')) {
+            this.$http.delete("http://localhost:8080/hospitais/delete/".concat(id))
+                .then(function (response) {
+                alert('Hospital excluido com sucesso');
+                _this.listarHospitais();
+            })
+                .catch(function (error) {
+                console.error('Erro ao deletar hospital:', error);
+            });
+        }
     };
     HospitalController.$inject = ['$http'];
     return HospitalController;
@@ -50006,6 +50020,73 @@ __webpack_require__.r(__webpack_exports__);
 
 var hospitalModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('hospitalModule', [])
     .controller('HospitalController', _hospital_controller__WEBPACK_IMPORTED_MODULE_1__.HospitalController);
+
+
+/***/ }),
+
+/***/ "./src/modules/quarto/quarto.controller.ts":
+/*!*************************************************!*\
+  !*** ./src/modules/quarto/quarto.controller.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   QuartoController: () => (/* binding */ QuartoController)
+/* harmony export */ });
+var QuartoController = /** @class */ (function () {
+    function QuartoController($http) {
+        this.$http = $http;
+        this.quartosDisponiveis = [];
+        this.buscarQuartosDisponiveis();
+    }
+    QuartoController.prototype.buscarQuartosDisponiveis = function () {
+        this.$http.get('http://localhost:8080/rooms/disponiveis')
+            .then(function (response) {
+            // this.quartosDisponiveis = response.data;
+        })
+            .catch(function (error) {
+            console.error('Erro ao buscar quartos:', error);
+        });
+    };
+    QuartoController.prototype.excluirQuarto = function (id) {
+        var _this = this;
+        this.$http.delete("http://localhost:8080/rooms/".concat(id))
+            .then(function () {
+            console.log('Quarto excluído');
+            _this.buscarQuartosDisponiveis();
+        })
+            .catch(function (error) {
+            console.error('Erro ao excluir quarto:', error);
+        });
+    };
+    QuartoController.$inject = ['$http'];
+    return QuartoController;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/modules/quarto/quarto.ts":
+/*!**************************************!*\
+  !*** ./src/modules/quarto/quarto.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   quartoModule: () => (/* binding */ quartoModule)
+/* harmony export */ });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _quarto_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./quarto.controller */ "./src/modules/quarto/quarto.controller.ts");
+
+
+var quartoModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('quatoModule', [])
+    .controller('QuartoController', _quarto_controller__WEBPACK_IMPORTED_MODULE_1__.QuartoController);
 
 
 /***/ })
@@ -50103,6 +50184,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _uirouter_angularjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @uirouter/angularjs */ "./node_modules/@uirouter/angularjs/lib-esm/index.js");
 /* harmony import */ var _modules_homepage_homepage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/homepage/homepage */ "./src/modules/homepage/homepage.ts");
 /* harmony import */ var _modules_hospital_hospital__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/hospital/hospital */ "./src/modules/hospital/hospital.ts");
+/* harmony import */ var _modules_quarto_quarto__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/quarto/quarto */ "./src/modules/quarto/quarto.ts");
+
 
 
 
@@ -50110,7 +50193,8 @@ __webpack_require__.r(__webpack_exports__);
 var app = angular__WEBPACK_IMPORTED_MODULE_0__.module('meuApp', [
     'ui.router',
     _modules_homepage_homepage__WEBPACK_IMPORTED_MODULE_2__.homePageModule.name,
-    _modules_hospital_hospital__WEBPACK_IMPORTED_MODULE_3__.hospitalModule.name
+    _modules_hospital_hospital__WEBPACK_IMPORTED_MODULE_3__.hospitalModule.name,
+    _modules_quarto_quarto__WEBPACK_IMPORTED_MODULE_4__.quartoModule.name
 ]);
 app.config([
     '$stateProvider',
@@ -50126,6 +50210,12 @@ app.config([
             url: '/hospitais',
             templateUrl: 'src/modules/hospital/hospital.html',
             controller: 'HospitalController',
+            controllerAs: 'vm'
+        });
+        $stateProvider.state('quartos', {
+            url: '/quartos',
+            templateUrl: 'src/modules/quarto/quarto.html',
+            controller: 'QuartoController',
             controllerAs: 'vm'
         });
         $urlRouterProvider.otherwise('/home');

@@ -13,15 +13,16 @@
     <div class="container">
         <form ng-submit="vm.adicionarHospital()">
             <label>Nome do Hospital:</label>
-            <input type="text" ng-model="vm.novoHospital.nome" placeholder="Digite o nome">
+            <input type="text" ng-model="vm.novoHospital.name" placeholder="Digite o nome">
 
             <button type="submit">Cadastrar</button>
         </form>
 
         <h2>Hospitais Cadastrados</h2>
         <ul>
-            <li ng-repeat="hospital in vm.hospitais">
-                {{ hospital.nome }} - 
+            <li ng-repeat="hospital in vm.hospitais" class="hospital-item">
+                {{hospital.id}} {{ hospital.name }} 
+                <button ng-click="vm.deletarHospitais(hospital.id) ">Delete</button>
             </li>
         </ul>
     </div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quartoModule" ng-controller="QuartoController as vm">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quartos</title>
+    <link rel="stylesheet" href="quarto.css">
+</head>
+<body ng-controller="quartoController as vm">
+    
+     <h1>Quartos com leitos disponiveis</h1>
+     
+    <div class="container">
+    <ul>
+        <li ng-repeat="quarto in vm.quartosDisponiveis">
+            Quarto: {{quarto.nome}} - Leitos Livres: {{quarto.leitosLivres}}
+            <button ng-click="vm.excluirQuarto(quarto.id)">Excluir</button>
+        </li>
+    </ul>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+    <script src="dist/quarto.controller.js"></script>
+    <script src="dist/app.js"></script>
+</body>
+</html>

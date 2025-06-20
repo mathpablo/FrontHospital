@@ -3,11 +3,13 @@ import '@uirouter/angularjs';
 
 import { homePageModule } from './modules/homepage/homepage';
 import { hospitalModule } from './modules/hospital/hospital';
+import { quartoModule } from './modules/quarto/quarto';
 
 const app = angular.module('meuApp', [
   'ui.router',
   homePageModule.name,
-  hospitalModule.name
+  hospitalModule.name,
+  quartoModule.name
 ]);
 
 app.config([
@@ -25,6 +27,13 @@ app.config([
       url: '/hospitais',
       templateUrl: 'src/modules/hospital/hospital.html',
       controller: 'HospitalController',
+      controllerAs: 'vm'
+    });
+
+    $stateProvider.state('quartos', {
+      url: '/quartos',
+      templateUrl: 'src/modules/quarto/quarto.html',
+      controller: 'QuartoController',
       controllerAs: 'vm'
     });
 

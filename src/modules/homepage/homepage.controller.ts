@@ -23,7 +23,7 @@ export class HomePageController {
        window.location.href = '/src/modules/patient/patient.html';
         break;
       case 'quartos':
-        window.location.href = 'quartos.html';
+        window.location.href = '/src/modules/quarto/quarto.html';
         break;
       case 'hospitais':
         window.location.href = '/src/modules/hospital/hospital.html';
