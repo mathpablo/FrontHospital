@@ -1,48 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" ng-app="patientModule" ng-controller="PatientController as vm">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastra De Paciente</title>
+  <meta charset="UTF-8">
+  <title>Cadastro de Paciente</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <link rel="stylesheet" href="patient.css">
 
-    <link rel="stylesheet" href="patient.css">
+  <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.8/dist/inputmask.min.js"></script>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Cadastro de Paciente</h1>
+  <div class="container">
 
-        <form id="pacienteForm" novalidate>
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" required placeholder="Digite o nome completo">
+    <h1>{{ vm.titulo }}</h1>
 
-            <label for="dataNascimento">Data de Nascimento:</label>
-            <input type="text" id="dataNascimento" name="dataNascimento" required placeholder="DD/MM/AAAA">
+    <form ng-submit="vm.adicionarPaciente()" id="pacienteForm" novalidate>
+      <label for="nome">Nome do Paciente:</label>
+      <input type="text" id="nome" ng-model="vm.novoPaciente.name" placeholder="Digite o nome completo" required>
 
-            <button type="submit">Cadastrar</button>
-        </form>
+      <label for="dataNascimento">Data de Nascimento:</label>
+      <input type="text" id="dataNascimento" ng-model="vm.novoPaciente.dataNascimento" placeholder="AAAA/MM/DD" required>
 
-        <h2>Pacientes Cadastrados</h2>
-        <ul id="listarPacientes"></ul>
-    </div>
+      <button type="submit">Cadastrar</button>
+    </form>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="patient.js"></script>
+    <h2>Pacientes Cadastrados</h2>
+    <ul id="listarPacientes">
+      <li ng-repeat="paciente in vm.pacientes" class="patient-item">
+        ID: {{ paciente.id }} | Nome: {{ paciente.name }} | Nascimento: {{ paciente.dataNascimento }}
+        <button ng-click="vm.deletarPaciente(paciente.id)">Excluir</button>
+      </li>
+    </ul>
 
-    <script>
+  </div>
 
-        Inputmask("99/99/9999").mask("#dataNascimento");
+  <script src="../../../dist/bundle.js"></script>
+ 
 
-        flatpickr("#dataNascimento", {
-            dateFormat: "d/m/y",
-            allowInput: true,
-            maxDate: "today"
-        });
-    
-    </script>
-    
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      Inputmask("9999/99/99").mask("#dataNascimento");
+
+      });
+
+  </script>
+
 </body>
 </html>

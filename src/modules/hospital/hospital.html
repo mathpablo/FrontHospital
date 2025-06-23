@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Hospital</title>
     <link rel="stylesheet" href="hospital.css">
+
+
 </head>
 <body>
 
@@ -22,7 +24,7 @@
         <ul>
             <li ng-repeat="hospital in vm.hospitais" class="hospital-item">
                 {{hospital.id}} {{ hospital.name }} 
-                <button ng-click="vm.deletarHospitais(hospital.id) ">Delete</button>
+                <button ng-click="vm.deletarHospital(hospital.id)">Delete</button>
             </li>
         </ul>
     </div>

@@ -15,6 +15,10 @@ display: flex;
 justify-content: center;
 }
 
+.header{
+    text-align: center;
+}
+
 .container{
     background: white;
     padding: 30px 40px;
@@ -48,8 +52,8 @@ form input[type="date"]{
     transition: 0 0 5px rgba(170, 170, 170, 0.4);
 }
 
-from input[type="text"]:focus,
-from input[type="text"]:focus {
+form input[type="text"]:focus,
+form input[type="date"]:focus {
     border-color: #c5c5c5;
     outline: none;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
@@ -81,4 +85,12 @@ ul#listarPacientes li:hover {
 
 ul#listarPacientes li:last-child{
     border-bottom: none;
+}
+
+.patient-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
 }

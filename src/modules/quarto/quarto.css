@@ -32,7 +32,7 @@ button{
     font-size: 14px;
     border: none;
     border-radius: 8px;
-    background-color: #0077b6;
+    background-color: #d9534f;
     color: white;
     cursor: pointer;
     transition: background-color 0.4s, transform 0.2s;
@@ -43,6 +43,25 @@ button :hover{
     transform: translateY(-2px);
 }
 
+form label{
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+}
+
+li{
+    background-color: #f1f1f1;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 6px;
+}
+
 .container{
     max-width: 600px;
     width: 90%;
@@ -51,3 +70,43 @@ button :hover{
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, alpha.2s);
 }
+
+
+.quarto-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.quarto-item button{
+     background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.hospital-item button :hover{
+    background-color: #c9302c;
+}
+
+input[type="text"] {
+  width: 300px;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 2px solid #000000;
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: #000000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+

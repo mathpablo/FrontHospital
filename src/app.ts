@@ -4,12 +4,15 @@ import '@uirouter/angularjs';
 import { homePageModule } from './modules/homepage/homepage';
 import { hospitalModule } from './modules/hospital/hospital';
 import { quartoModule } from './modules/quarto/quarto';
+import { patientModule } from './modules/patient/patient';
+import { url } from 'inspector';
 
 const app = angular.module('meuApp', [
   'ui.router',
   homePageModule.name,
   hospitalModule.name,
-  quartoModule.name
+  quartoModule.name,
+  patientModule.name
 ]);
 
 app.config([
@@ -34,6 +37,13 @@ app.config([
       url: '/quartos',
       templateUrl: 'src/modules/quarto/quarto.html',
       controller: 'QuartoController',
+      controllerAs: 'vm'
+    });
+
+    $stateProvider.state('patient', {
+      url: '/patient',
+      templateUrl: 'src/modules/patient/patient.html',
+      controller: 'PatientController',
       controllerAs: 'vm'
     });
 

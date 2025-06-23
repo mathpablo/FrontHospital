@@ -50024,6 +50024,83 @@ var hospitalModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('hospitalModule
 
 /***/ }),
 
+/***/ "./src/modules/patient/patient.controller.ts":
+/*!***************************************************!*\
+  !*** ./src/modules/patient/patient.controller.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PatientController: () => (/* binding */ PatientController)
+/* harmony export */ });
+var PatientController = /** @class */ (function () {
+    function PatientController($http) {
+        this.$http = $http;
+        this.titulo = 'Cadastro de Pacientes';
+        this.pacientes = [];
+        this.novoPaciente = { name: '', dataNascimento: '' };
+        this.listarPacientes();
+    }
+    PatientController.prototype.listarPacientes = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/pacientes/listar-pacientes')
+            .then(function (response) {
+            _this.pacientes = response.data;
+        })
+            .catch(function (error) {
+            console.error('Erro ao listar pacientes:', error);
+        });
+    };
+    PatientController.prototype.adicionarPaciente = function () {
+        var _this = this;
+        console.log('Paciente antes de enviar:', this.novoPaciente);
+        var dataCorrigida = this.novoPaciente.dataNascimento.replace(/\//g, '-');
+        var pacienteParaEnviar = {
+            name: this.novoPaciente.name,
+            dataNascimento: dataCorrigida
+        };
+        this.$http.post('http://localhost:8080/pacientes/create', pacienteParaEnviar)
+            .then(function () {
+            alert('Paciente cadastrado com sucesso!');
+            _this.novoPaciente = { name: '', dataNascimento: '' };
+            _this.listarPacientes();
+        })
+            .catch(function (error) {
+            console.error('Erro ao cadastrar paciente:', error);
+        });
+    };
+    PatientController.$inject = ['$http'];
+    return PatientController;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/modules/patient/patient.ts":
+/*!****************************************!*\
+  !*** ./src/modules/patient/patient.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   patientModule: () => (/* binding */ patientModule)
+/* harmony export */ });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _patient_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./patient.controller */ "./src/modules/patient/patient.controller.ts");
+
+
+var patientModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('patientModule', [])
+    .controller('PatientController', _patient_controller__WEBPACK_IMPORTED_MODULE_1__.PatientController);
+
+
+/***/ }),
+
 /***/ "./src/modules/quarto/quarto.controller.ts":
 /*!*************************************************!*\
   !*** ./src/modules/quarto/quarto.controller.ts ***!
@@ -50037,14 +50114,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var QuartoController = /** @class */ (function () {
     function QuartoController($http) {
+        var _this = this;
         this.$http = $http;
+        this.filtro = '';
+        this.filtrarQuartos = function (quarto) {
+            if (!_this.filtro || _this.filtro.trim() === '') {
+                return true;
+            }
+            var termo = _this.filtro.toLowerCase();
+            return ((quarto.codigo && quarto.codigo.toLowerCase().includes(termo)) ||
+                (quarto.specialty && quarto.specialty.toLowerCase().includes(termo)));
+        };
         this.quartosDisponiveis = [];
         this.buscarQuartosDisponiveis();
     }
     QuartoController.prototype.buscarQuartosDisponiveis = function () {
+        var _this = this;
         this.$http.get('http://localhost:8080/rooms/disponiveis')
             .then(function (response) {
-            // this.quartosDisponiveis = response.data;
+            _this.quartosDisponiveis = response.data;
         })
             .catch(function (error) {
             console.error('Erro ao buscar quartos:', error);
@@ -50085,7 +50173,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _quarto_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./quarto.controller */ "./src/modules/quarto/quarto.controller.ts");
 
 
-var quartoModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('quatoModule', [])
+var quartoModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('quartoModule', [])
     .controller('QuartoController', _quarto_controller__WEBPACK_IMPORTED_MODULE_1__.QuartoController);
 
 
@@ -50185,6 +50273,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_homepage_homepage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/homepage/homepage */ "./src/modules/homepage/homepage.ts");
 /* harmony import */ var _modules_hospital_hospital__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/hospital/hospital */ "./src/modules/hospital/hospital.ts");
 /* harmony import */ var _modules_quarto_quarto__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/quarto/quarto */ "./src/modules/quarto/quarto.ts");
+/* harmony import */ var _modules_patient_patient__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/patient/patient */ "./src/modules/patient/patient.ts");
+
 
 
 
@@ -50194,7 +50284,8 @@ var app = angular__WEBPACK_IMPORTED_MODULE_0__.module('meuApp', [
     'ui.router',
     _modules_homepage_homepage__WEBPACK_IMPORTED_MODULE_2__.homePageModule.name,
     _modules_hospital_hospital__WEBPACK_IMPORTED_MODULE_3__.hospitalModule.name,
-    _modules_quarto_quarto__WEBPACK_IMPORTED_MODULE_4__.quartoModule.name
+    _modules_quarto_quarto__WEBPACK_IMPORTED_MODULE_4__.quartoModule.name,
+    _modules_patient_patient__WEBPACK_IMPORTED_MODULE_5__.patientModule.name
 ]);
 app.config([
     '$stateProvider',
@@ -50216,6 +50307,12 @@ app.config([
             url: '/quartos',
             templateUrl: 'src/modules/quarto/quarto.html',
             controller: 'QuartoController',
+            controllerAs: 'vm'
+        });
+        $stateProvider.state('patient', {
+            url: '/patient',
+            templateUrl: 'src/modules/patient/patient.html',
+            controller: 'PatientController',
             controllerAs: 'vm'
         });
         $urlRouterProvider.otherwise('/home');
