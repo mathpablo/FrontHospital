@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="leitoModule">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Leitos</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+    <link rel="stylesheet" href="leito.css">
+</head>
+<body ng-controller="LeitoController as vm">
+    <div class="container">
+
+        <h1>Quantidades de leitos livres por especialidade.</h1>
+
+        <ul>
+            <li ng-repeat="quantidade in vm.quantidades">
+                Especialidade: {{quantidade.specialty}} <br>Leitos livres: {{quantidade.quantidadeLeitoLivres}}
+            </li>
+        </ul>
+
+        <h2>Atualizar Status de Leito</h2>
+        <input type="number" ng-model="vm.leitoId" placeholder="ID do leito">
+        <select ng-model="vm.novoStatus">
+            <option value="LIVRE">LIVRE</option>
+            <option value="OCUPADO">OCUPADO</option>
+        </select>
+        <button ng-click="vm.atualizarStatus()">Atualizar</button>
+
+        <h2>Excluir leito</h2>
+        <input type="number" ng-model="vm.idParaExcluir" placeholder="ID do Leito">
+        <button ng-click="vm.excluirLeito()">Excluir</button>
+    </div>
+    
+    <script src="../../../dist/bundle.js"></script>
+</body>
+</html>

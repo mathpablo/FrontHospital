@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="alaModule">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Alas</title>
+
+    <link rel="stylesheet" href="ala.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+
+</head>
+<body ng-conrtoller="AlaController as vm">
+    <div class="container">
+    <h1>Gerenciar Alas</h1>
+
+    <h2>Criar Ala</h2>
+    <input type="number" ng-model="vm.hospitalId" placeholder="ID do Hospital">
+    <input type="text" ng-model="vm.specialty" placeholder="Especialida(ex:CARDIOLOGIA)"> 
+    <input type="number" ng-model="vm.quantidadesQuartos" placeholder="Quantidades de Quartos">
+    <input type="number" ng-model="vm.quantidadeLeitosPorQuartos" placeholder="Leitos por quartos">
+    <button ng-click="vm.criarAla()">Criar</button>
+    </div>
+
+     <script src="../../../dist/bundle.js"></script>
+</body>
+</html>

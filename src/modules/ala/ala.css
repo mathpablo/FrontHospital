@@ -1,0 +1,35 @@
+html, body{
+      margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(90deg, rgb(83, 163, 255),#b3e5fc, white );
+  height: 100%;
+}
+
+.container{
+      max-width: 600px;
+    width: 90%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, alpha.2s);
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 30px;
+}
+
+.header{
+   text-align: center; 
+}
+
+input, select, button {
+  margin-top: 5px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}

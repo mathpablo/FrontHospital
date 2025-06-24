@@ -9,18 +9,21 @@
 </head>
 <body ng-controller="QuartoController as vm">
 
-  <h1>Quartos</h1>
-
-   <input type="text" ng-model="vm.filtro" placeholder="Buscar por código ou especialidade">
 
   <div class="container">
+    <div>
+         <h1>Quartos</h1>
+
+         <input type="text" ng-model="vm.filtro" placeholder="Buscar por código ou especialidade">
+    </div>
     <ul>
+   
       <li ng-repeat="quarto in vm.quartosDisponiveis | filter:vm.filtrarQuartos">
         <strong>Quarto: {{quarto.codigo}} - Especialidade: {{quarto.specialty}}</strong>
 
         <ul>
           <li ng-repeat="leito in quarto.leitos" >
-            Leito ID: {{leito.id}} - Status: {{leito.status}}
+            Leito ID: {{leito.id}} <br>Status: {{leito.status}}
           </li>
         </ul>
 

@@ -32,7 +32,7 @@ button{
     font-size: 14px;
     border: none;
     border-radius: 8px;
-    background-color: #d9534f;
+    background-color: #ccc;
     color: white;
     cursor: pointer;
     transition: background-color 0.4s, transform 0.2s;
@@ -81,7 +81,7 @@ li{
 }
 
 .quarto-item button{
-     background-color: #d9534f;
+     background-color: #ccc;
     color: white;
     border: none;
     padding: 6px 12px;
@@ -90,7 +90,7 @@ li{
 }
 
 .hospital-item button :hover{
-    background-color: #c9302c;
+    background-color: #ccc;
 }
 
 input[type="text"] {
@@ -108,5 +108,11 @@ input[type="text"]:focus {
   border-color: #000000;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+
+h1{
+    padding: 0;
+    align-items: center;
+}
+
 
 

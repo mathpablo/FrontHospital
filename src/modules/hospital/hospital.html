@@ -23,7 +23,7 @@
         <h2>Hospitais Cadastrados</h2>
         <ul>
             <li ng-repeat="hospital in vm.hospitais" class="hospital-item">
-                {{hospital.id}} {{ hospital.name }} 
+                ID:{{hospital.id}} {{ hospital.name }} 
                 <button ng-click="vm.deletarHospital(hospital.id)">Delete</button>
             </li>
         </ul>

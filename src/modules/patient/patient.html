@@ -28,7 +28,7 @@
     <h2>Pacientes Cadastrados</h2>
     <ul id="listarPacientes">
       <li ng-repeat="paciente in vm.pacientes" class="patient-item">
-        ID: {{ paciente.id }} | Nome: {{ paciente.name }} | Nascimento: {{ paciente.dataNascimento }}
+        ID: {{ paciente.id }} <br>Nome: {{ paciente.name }} <br>Nascimento: {{ paciente.dataNascimento }}
         <button ng-click="vm.deletarPaciente(paciente.id)">Excluir</button>
       </li>
     </ul>

@@ -10,14 +10,14 @@ export class HomePageController {
     console.log(`Navegando para: ${destino}`);
 
     switch (destino.toLowerCase()) {
-      case 'alas':
-        window.location.href = 'ala.html';
+      case 'ala':
+        window.location.href = '/src/modules/ala/ala.html';
         break;
       case 'internações':
         window.location.href = 'internacoes.html';
         break;
-      case 'leitos':
-        window.location.href = 'leitos.html';
+      case 'leito':
+        window.location.href = '/src/modules/leito/leito.html';
         break;
       case 'paciente':
        window.location.href = '/src/modules/patient/patient.html';

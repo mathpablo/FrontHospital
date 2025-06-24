@@ -49871,6 +49871,94 @@ module.exports = angular;
 
 /***/ }),
 
+/***/ "./src/modules/ala/ala.controller.ts":
+/*!*******************************************!*\
+  !*** ./src/modules/ala/ala.controller.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AlaController: () => (/* binding */ AlaController)
+/* harmony export */ });
+var AlaController = /** @class */ (function () {
+    function AlaController($http, $window) {
+        this.$http = $http;
+        this.$window = $window;
+        this.hospitalId = null;
+        this.specialty = '';
+        this.quantidadeQuartos = null;
+        this.quantidadeLeitosPorQuartos = null;
+        this.idParaExcluir = null;
+    }
+    AlaController.prototype.criarAla = function () {
+        if (this.hospitalId != null && this.specialty && this.quantidadeQuartos != null && this.quantidadeLeitosPorQuartos != null) {
+            var novaAla = {
+                hospitalId: this.hospitalId,
+                specialty: this.specialty,
+                quantidadeQuartos: this.quantidadeQuartos,
+                quantidadeLeitosPorQuartos: this.quantidadeLeitosPorQuartos
+            };
+            this.$http.post('http://localhost:8080/alas/create', novaAla)
+                .then(function () {
+                alert('Ala criada com sucesso!');
+            })
+                .catch(function (error) {
+                console.error('Erro ao criar ala:', error);
+            });
+        }
+        else {
+            alert('Preencha todos os campos para criar uma ala.');
+        }
+    };
+    AlaController.prototype.excluirAla = function () {
+        if (this.idParaExcluir != null) {
+            this.$http.delete("http://localhost:8080/alas/ala/".concat(this.idParaExcluir))
+                .then(function () {
+                alert('Ala excluída com sucesso!');
+            })
+                .catch(function (error) {
+                console.error('Erro ao excluir ala:', error);
+            });
+        }
+        else {
+            alert('Informe o ID da Ala para excluir.');
+        }
+    };
+    AlaController.prototype.voltar = function () {
+        this.$window.location.href = '../../homepage.html';
+    };
+    AlaController.$inject = ['$http', '$window'];
+    return AlaController;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/modules/ala/ala.ts":
+/*!********************************!*\
+  !*** ./src/modules/ala/ala.ts ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   alaModule: () => (/* binding */ alaModule)
+/* harmony export */ });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ala_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ala.controller */ "./src/modules/ala/ala.controller.ts");
+
+
+var alaModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('alaModule', [])
+    .controller('AlaController', _ala_controller__WEBPACK_IMPORTED_MODULE_1__.AlaController);
+
+
+/***/ }),
+
 /***/ "./src/modules/homepage/homepage.controller.ts":
 /*!*****************************************************!*\
   !*** ./src/modules/homepage/homepage.controller.ts ***!
@@ -49889,14 +49977,14 @@ var HomePageController = /** @class */ (function () {
     HomePageController.prototype.navigate = function (destino) {
         console.log("Navegando para: ".concat(destino));
         switch (destino.toLowerCase()) {
-            case 'alas':
-                window.location.href = 'ala.html';
+            case 'ala':
+                window.location.href = '/src/modules/ala/ala.html';
                 break;
             case 'internações':
                 window.location.href = 'internacoes.html';
                 break;
-            case 'leitos':
-                window.location.href = 'leitos.html';
+            case 'leito':
+                window.location.href = '/src/modules/leito/leito.html';
                 break;
             case 'paciente':
                 window.location.href = '/src/modules/patient/patient.html';
@@ -50024,6 +50112,103 @@ var hospitalModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('hospitalModule
 
 /***/ }),
 
+/***/ "./src/modules/leito/leito.Controller.ts":
+/*!***********************************************!*\
+  !*** ./src/modules/leito/leito.Controller.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LeitoController: () => (/* binding */ LeitoController)
+/* harmony export */ });
+var LeitoController = /** @class */ (function () {
+    function LeitoController($http, $window) {
+        this.$http = $http;
+        this.$window = $window;
+        this.quantidades = [];
+        this.leitoId = null;
+        this.novoStatus = '';
+        this.idParaExcluir = null;
+        this.listarQuantidades();
+    }
+    LeitoController.prototype.listarQuantidades = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/leitos/quantidades-livres')
+            .then(function (response) {
+            _this.quantidades = response.data;
+        })
+            .catch(function (error) {
+            console.error('Erro ao buscar quantidades de leitos livres:', error);
+        });
+    };
+    LeitoController.prototype.atualizarStatus = function () {
+        var _this = this;
+        if (this.leitoId != null && this.novoStatus) {
+            this.$http.put("http://localhost:8080/leitos/".concat(this.leitoId, "/status"), { status: this.novoStatus })
+                .then(function () {
+                alert('Status atualizado com sucesso!');
+                _this.listarQuantidades();
+            })
+                .catch(function (error) {
+                console.error('Erro ao atualizar status:', error);
+                alert('Erro ao atualizar status: ' + JSON.stringify(error.data));
+            });
+        }
+        else {
+            alert('Preencha o ID do leito e o novo status.');
+        }
+    };
+    LeitoController.prototype.excluirLeito = function () {
+        var _this = this;
+        if (this.idParaExcluir != null) {
+            this.$http.delete("http://localhost:8080/leitos/".concat(this.idParaExcluir))
+                .then(function () {
+                alert('Leito excluído com sucesso!');
+                _this.listarQuantidades();
+            })
+                .catch(function (error) {
+                console.error('Erro ao excluir leito:', error);
+            });
+        }
+        else {
+            alert('Informe o ID do leito a excluir.');
+        }
+    };
+    LeitoController.prototype.voltar = function () {
+        this.$window.location.href = '../../homepage.html';
+    };
+    LeitoController.$inject = ['$http', '$window'];
+    return LeitoController;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/modules/leito/leito.ts":
+/*!************************************!*\
+  !*** ./src/modules/leito/leito.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   leitoModule: () => (/* binding */ leitoModule)
+/* harmony export */ });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _leito_Controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./leito.Controller */ "./src/modules/leito/leito.Controller.ts");
+
+
+var leitoModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('leitoModule', [])
+    .controller('LeitoController', _leito_Controller__WEBPACK_IMPORTED_MODULE_1__.LeitoController);
+
+
+/***/ }),
+
 /***/ "./src/modules/patient/patient.controller.ts":
 /*!***************************************************!*\
   !*** ./src/modules/patient/patient.controller.ts ***!
@@ -50146,6 +50331,11 @@ var QuartoController = /** @class */ (function () {
             _this.buscarQuartosDisponiveis();
         })
             .catch(function (error) {
+            var mensagemErro = 'Erro ao excluir quarto.';
+            if (error.data) {
+                mensagemErro = error.data;
+            }
+            alert(mensagemErro);
             console.error('Erro ao excluir quarto:', error);
         });
     };
@@ -50274,6 +50464,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_hospital_hospital__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/hospital/hospital */ "./src/modules/hospital/hospital.ts");
 /* harmony import */ var _modules_quarto_quarto__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/quarto/quarto */ "./src/modules/quarto/quarto.ts");
 /* harmony import */ var _modules_patient_patient__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/patient/patient */ "./src/modules/patient/patient.ts");
+/* harmony import */ var _modules_leito_leito__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/leito/leito */ "./src/modules/leito/leito.ts");
+/* harmony import */ var _modules_ala_ala__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/ala/ala */ "./src/modules/ala/ala.ts");
+
+
 
 
 
@@ -50285,7 +50479,9 @@ var app = angular__WEBPACK_IMPORTED_MODULE_0__.module('meuApp', [
     _modules_homepage_homepage__WEBPACK_IMPORTED_MODULE_2__.homePageModule.name,
     _modules_hospital_hospital__WEBPACK_IMPORTED_MODULE_3__.hospitalModule.name,
     _modules_quarto_quarto__WEBPACK_IMPORTED_MODULE_4__.quartoModule.name,
-    _modules_patient_patient__WEBPACK_IMPORTED_MODULE_5__.patientModule.name
+    _modules_patient_patient__WEBPACK_IMPORTED_MODULE_5__.patientModule.name,
+    _modules_leito_leito__WEBPACK_IMPORTED_MODULE_6__.leitoModule.name,
+    _modules_ala_ala__WEBPACK_IMPORTED_MODULE_7__.alaModule.name
 ]);
 app.config([
     '$stateProvider',
@@ -50313,6 +50509,18 @@ app.config([
             url: '/patient',
             templateUrl: 'src/modules/patient/patient.html',
             controller: 'PatientController',
+            controllerAs: 'vm'
+        });
+        $stateProvider.state('leito', {
+            url: '/leito',
+            templateUrl: 'src/modules/leito/leito.html',
+            controller: 'LeitoController',
+            controllerAs: 'vm'
+        });
+        $stateProvider.state('ala', {
+            url: '/ala',
+            templateUrl: 'src/modules/ala/ala.html',
+            controller: 'AlaController',
             controllerAs: 'vm'
         });
         $urlRouterProvider.otherwise('/home');
