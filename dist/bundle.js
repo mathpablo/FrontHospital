@@ -49920,6 +49920,15 @@ var AlaController = /** @class */ (function () {
             })
                 .catch(function (error) {
                 console.error('Erro ao excluir ala:', error);
+                if (error.status === 400) {
+                    alert(error.data);
+                }
+                else if (error.status === 404) {
+                    alert('Ala não encontrada.');
+                }
+                else {
+                    alert('Erro inesperado ao excluir ala.');
+                }
             });
         }
         else {
@@ -49981,7 +49990,7 @@ var HomePageController = /** @class */ (function () {
                 window.location.href = '/src/modules/ala/ala.html';
                 break;
             case 'internações':
-                window.location.href = 'internacoes.html';
+                window.location.href = '/src/modules/internmentLog/internment.html';
                 break;
             case 'leito':
                 window.location.href = '/src/modules/leito/leito.html';
@@ -50108,6 +50117,95 @@ __webpack_require__.r(__webpack_exports__);
 
 var hospitalModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('hospitalModule', [])
     .controller('HospitalController', _hospital_controller__WEBPACK_IMPORTED_MODULE_1__.HospitalController);
+
+
+/***/ }),
+
+/***/ "./src/modules/internmentLog/internment.controller.ts":
+/*!************************************************************!*\
+  !*** ./src/modules/internmentLog/internment.controller.ts ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   InternmentController: () => (/* binding */ InternmentController)
+/* harmony export */ });
+var InternmentController = /** @class */ (function () {
+    function InternmentController($http) {
+        this.$http = $http;
+        this.vm = this;
+        this.vm.tela = '';
+    }
+    InternmentController.prototype.selecionar = function (tela) {
+        this.vm.tela = tela;
+        if (tela === 'ativos')
+            this.carregarAtivos();
+        if (tela === 'especialidade')
+            this.listarEspecialidade();
+    };
+    InternmentController.prototype.internar = function () {
+        var data = { patientId: this.vm.patientId, specialty: this.vm.specialty };
+        this.$http.post('http://localhost:8080/internacoes/internar', data)
+            .then(function () { return alert("Internado!"); });
+    };
+    InternmentController.prototype.darAlta = function () {
+        this.$http.put("http://localhost:8080/internacoes/alta/".concat(this.vm.internmentLogId), {})
+            .then(function () { return alert("Alta dada!"); });
+    };
+    InternmentController.prototype.carregarAtivos = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/internacoes/ativos')
+            .then(function (res) { return _this.vm.internacoesAtivas = res.data; });
+    };
+    InternmentController.prototype.buscarHistorico = function () {
+        var _this = this;
+        this.$http.get("http://localhost:8080/internacoes/historico/paciente/".concat(this.vm.pacienteHistoricoId))
+            .then(function (res) {
+            _this.vm.historicoPaciente = res.data.content;
+        })
+            .catch(function (err) {
+            console.error(err);
+            _this.vm.historicoPaciente = [];
+        });
+    };
+    InternmentController.prototype.listarEspecialidade = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/internacoes/ativos/por-especialidade')
+            .then(function (res) { return _this.vm.porEspecialidade = res.data; });
+    };
+    InternmentController.prototype.buscarHistoricoLeito = function () {
+        var _this = this;
+        this.$http.get("http://localhost:8080/internacoes/historico/leito/".concat(this.vm.codigoLeito))
+            .then(function (res) { return _this.vm.historicoLeito = res.data; });
+    };
+    InternmentController.$inject = ['$http'];
+    return InternmentController;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/modules/internmentLog/internment.ts":
+/*!*************************************************!*\
+  !*** ./src/modules/internmentLog/internment.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   internmentLogModule: () => (/* binding */ internmentLogModule)
+/* harmony export */ });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _internment_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./internment.controller */ "./src/modules/internmentLog/internment.controller.ts");
+
+
+var internmentLogModule = angular__WEBPACK_IMPORTED_MODULE_0__.module('internmentLogModule', [])
+    .controller('InternmentLogController', _internment_controller__WEBPACK_IMPORTED_MODULE_1__.InternmentController);
 
 
 /***/ }),
@@ -50466,6 +50564,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_patient_patient__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/patient/patient */ "./src/modules/patient/patient.ts");
 /* harmony import */ var _modules_leito_leito__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/leito/leito */ "./src/modules/leito/leito.ts");
 /* harmony import */ var _modules_ala_ala__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/ala/ala */ "./src/modules/ala/ala.ts");
+/* harmony import */ var _modules_internmentLog_internment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/internmentLog/internment */ "./src/modules/internmentLog/internment.ts");
+
 
 
 
@@ -50481,7 +50581,8 @@ var app = angular__WEBPACK_IMPORTED_MODULE_0__.module('meuApp', [
     _modules_quarto_quarto__WEBPACK_IMPORTED_MODULE_4__.quartoModule.name,
     _modules_patient_patient__WEBPACK_IMPORTED_MODULE_5__.patientModule.name,
     _modules_leito_leito__WEBPACK_IMPORTED_MODULE_6__.leitoModule.name,
-    _modules_ala_ala__WEBPACK_IMPORTED_MODULE_7__.alaModule.name
+    _modules_ala_ala__WEBPACK_IMPORTED_MODULE_7__.alaModule.name,
+    _modules_internmentLog_internment__WEBPACK_IMPORTED_MODULE_8__.internmentLogModule.name
 ]);
 app.config([
     '$stateProvider',
@@ -50521,6 +50622,12 @@ app.config([
             url: '/ala',
             templateUrl: 'src/modules/ala/ala.html',
             controller: 'AlaController',
+            controllerAs: 'vm'
+        });
+        $stateProvider.state('internações', {
+            url: '/internações',
+            templateUrl: 'src/modules/internmentLog/internment.html',
+            controller: 'InternmentLogController',
             controllerAs: 'vm'
         });
         $urlRouterProvider.otherwise('/home');

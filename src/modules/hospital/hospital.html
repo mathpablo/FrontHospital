@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR" ng-app="hospitalModule" ng-controller="HospitalController as vm">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Hospital</title>
-    <link rel="stylesheet" href="hospital.css">
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Hospital</title>
+  <link rel="stylesheet" href="hospital.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
 </head>
 <body>
+  <div class="container">
+    <button class="back-button" onclick="window.history.back()">Voltar</button>
 
     <h1>{{ vm.titulo }}</h1>
 
-    <div class="container">
-        <form ng-submit="vm.adicionarHospital()">
-            <label>Nome do Hospital:</label>
-            <input type="text" ng-model="vm.novoHospital.name" placeholder="Digite o nome">
+    <form ng-submit="vm.adicionarHospital()">
+      <label>Nome do Hospital:</label>
+      <input type="text" ng-model="vm.novoHospital.name" placeholder="Digite o nome">
+      <button type="submit">Cadastrar</button>
+    </form>
 
-            <button type="submit">Cadastrar</button>
-        </form>
+    <h2>Hospitais Cadastrados</h2>
+    <ul>
+      <li ng-repeat="hospital in vm.hospitais" class="hospital-item">
+        <span><strong>ID:</strong> {{hospital.id}} - {{ hospital.name }}</span>
+        <button ng-click="vm.deletarHospital(hospital.id)">Deletar</button>
+      </li>
+    </ul>
+  </div>
 
-        <h2>Hospitais Cadastrados</h2>
-        <ul>
-            <li ng-repeat="hospital in vm.hospitais" class="hospital-item">
-                ID:{{hospital.id}} {{ hospital.name }} 
-                <button ng-click="vm.deletarHospital(hospital.id)">Delete</button>
-            </li>
-        </ul>
-    </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
-    <script src="../../../dist/bundle.js"></script> 
+  <script src="../../../dist/bundle.js"></script> 
 </body>
 </html>

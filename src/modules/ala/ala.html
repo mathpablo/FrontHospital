@@ -9,16 +9,38 @@
      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
 
 </head>
-<body ng-conrtoller="AlaController as vm">
+<body ng-controller="AlaController as vm">
     <div class="container">
+        <button class="back-button" onclick="window.history.back()">Voltar</button>
     <h1>Gerenciar Alas</h1>
 
     <h2>Criar Ala</h2>
+
+    <div class="form-group">
+        <label> Id do hospital</label>
     <input type="number" ng-model="vm.hospitalId" placeholder="ID do Hospital">
+    </div>
+
+    <div class="form-group">
+        <label> Especialidade</label>
     <input type="text" ng-model="vm.specialty" placeholder="Especialida(ex:CARDIOLOGIA)"> 
-    <input type="number" ng-model="vm.quantidadesQuartos" placeholder="Quantidades de Quartos">
+    </div>
+
+    <div class="form-group">
+        <label >Quantidades de quartos</label>
+    <input type="number" ng-model="vm.quantidadeQuartos" placeholder="Quantidades de Quartos">
+    </div>
+
+    <div class="form-group">
+        <label > Leitos por quartos:</label>
     <input type="number" ng-model="vm.quantidadeLeitosPorQuartos" placeholder="Leitos por quartos">
+    </div>
+
     <button ng-click="vm.criarAla()">Criar</button>
+
+    <H2>Excluir Ala</H2>
+    <input type="number" ng-model="vm.idParaExcluir" placeholder="ID da Ala">
+    <button ng-click="vm.excluirAla()">Excluir</button>
     </div>
 
      <script src="../../../dist/bundle.js"></script>

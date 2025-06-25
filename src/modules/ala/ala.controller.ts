@@ -40,18 +40,27 @@ export class AlaController {
   }
 
   excluirAla(): void {
-    if (this.idParaExcluir != null) {
-      this.$http.delete(`http://localhost:8080/alas/ala/${this.idParaExcluir}`)
-        .then(() => {
-          alert('Ala excluída com sucesso!');
-        })
-        .catch(error => {
-          console.error('Erro ao excluir ala:', error);
-        });
-    } else {
-      alert('Informe o ID da Ala para excluir.');
-    }
+  if (this.idParaExcluir != null) {
+    this.$http.delete(`http://localhost:8080/alas/ala/${this.idParaExcluir}`)
+      .then(() => {
+        alert('Ala excluída com sucesso!');
+      })
+      .catch(error => {
+        console.error('Erro ao excluir ala:', error);
+        
+        if (error.status === 400) {
+          alert(error.data); 
+        } else if (error.status === 404) {
+          alert('Ala não encontrada.');
+        } else {
+          alert('Erro inesperado ao excluir ala.');
+        }
+      });
+  } else {
+    alert('Informe o ID da Ala para excluir.');
   }
+}
+
 
   voltar(): void {
     this.$window.location.href = '../../homepage.html';

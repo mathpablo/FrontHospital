@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="leito.css">
 </head>
 <body ng-controller="LeitoController as vm">
+     
     <div class="container">
-
+        <button class="back-button" onclick="window.history.back()">Voltar</button>
         <h1>Quantidades de leitos livres por especialidade.</h1>
 
         <ul>
@@ -30,6 +31,7 @@
         <h2>Excluir leito</h2>
         <input type="number" ng-model="vm.idParaExcluir" placeholder="ID do Leito">
         <button ng-click="vm.excluirLeito()">Excluir</button>
+
     </div>
     
     <script src="../../../dist/bundle.js"></script>

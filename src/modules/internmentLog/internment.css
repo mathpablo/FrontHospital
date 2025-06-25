@@ -4,4 +4,125 @@ html, body {
   font-family: Arial, sans-serif;
   background: linear-gradient(90deg, rgb(83, 163, 255),#b3e5fc, white );
   height: 100%;
+}*{
+  box-sizing: border-box;
 }
+
+.container{
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #f9fbfd;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.container h1{
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #0d47a1;
+}
+
+.container h2{
+  font-size: 22px;
+  color: #1565c0;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.menu button {
+  padding: 12px 16px;
+  background-color: #1976d2; /* azul forte */
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.menu button:hover {
+  background-color: #1565c0;
+  transform: scale(1.05);
+}
+
+
+input [type="number"],
+input [type="text"] {
+  padding: 10px;
+  width: 250px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+button{
+  padding: 10px 16px;
+  margin: 5px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover{
+  background-color: #388e3c;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+li{
+  background-color: white;
+  padding: 15px;
+  margin-top: 10px;
+  border-left: 4px solid #2196f3;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05)
+}
+
+li strong{
+  color: #0d47a1;
+  display: inline-block;
+  width: 180px;
+}
+
+li br{
+  margin-bottom: 5px;
+}
+
+.back-button {
+  background-color: #1976d2;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #004ba0;
+  transform: scale(1.05);
+}
+
+
+
+

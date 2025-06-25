@@ -14,7 +14,7 @@ export class HomePageController {
         window.location.href = '/src/modules/ala/ala.html';
         break;
       case 'internações':
-        window.location.href = 'internacoes.html';
+        window.location.href = '/src/modules/internmentLog/internment.html';
         break;
       case 'leito':
         window.location.href = '/src/modules/leito/leito.html';

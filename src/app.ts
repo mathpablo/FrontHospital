@@ -6,7 +6,8 @@ import { hospitalModule } from './modules/hospital/hospital';
 import { quartoModule } from './modules/quarto/quarto';
 import { patientModule } from './modules/patient/patient';
 import { leitoModule} from './modules/leito/leito';
-import { alaModule} from './modules/ala/ala'
+import { alaModule} from './modules/ala/ala';
+import { internmentLogModule } from './modules/internmentLog/internment';
 import { url } from 'inspector';
 
 const app = angular.module('meuApp', [
@@ -16,7 +17,8 @@ const app = angular.module('meuApp', [
   quartoModule.name,
   patientModule.name,
   leitoModule.name,
-  alaModule.name
+  alaModule.name,
+  internmentLogModule.name
 ]);
 
 app.config([
@@ -62,6 +64,13 @@ app.config([
       url: '/ala',
       templateUrl: 'src/modules/ala/ala.html',
       controller: 'AlaController',
+      controllerAs: 'vm'
+    })
+
+       $stateProvider.state('internações', {
+      url: '/internações',
+      templateUrl: 'src/modules/internmentLog/internment.html',
+      controller: 'InternmentLogController',
       controllerAs: 'vm'
     })
 
