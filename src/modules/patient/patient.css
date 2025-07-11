@@ -2,21 +2,19 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(90deg, rgb(83, 163, 255),#b3e5fc, white );
-}
-*{
-    box-sizing: border-box;
+   background-color: #006699;
+  width: 100%;
+
 }
 
-body{
-margin: 0;
-padding: 40px 20px;
-display: flex;
-justify-content: center;
+* {
+  box-sizing: border-box;
 }
 
-.header{
-    text-align: center;
+body {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
 }
 
 .container{
@@ -29,83 +27,108 @@ justify-content: center;
     margin: 0 auto;
 }
 
-h1{
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
+h1 {
+  text-align: center;
+  font-size: 26px;
+  color: #0d47a1;
+  margin-bottom: 25px;
 }
 
-form label{
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-    color: #555;
+form label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
 }
 
 form input[type="text"],
-form input[type="date"]{
-    width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 18px;
-    border: 1.5px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: 0 0 5px rgba(170, 170, 170, 0.4);
+form input[type="date"] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  margin-bottom: 18px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  transition: 0.3s ease;
 }
 
-form input[type="text"]:focus,
-form input[type="date"]:focus {
-    border-color: #c5c5c5;
-    outline: none;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+form input:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.3);
+  outline: none;
 }
 
-button:hover{
-    background-color: #8f8f8f;
+button {
+  padding: 10px 16px;
+  font-weight: bold;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-h2{
-    margin-top: 35px;
-    margin-bottom: 15px;
-    color: #444;
-    padding-bottom: 6px;
-     text-align: center;    
+button:hover {
+  background-color: #0d47a1;
+  transform: scale(1.03);
 }
 
-ul#listarPacientes li{
-    padding: 10px 15px;
-    border-bottom: 1px solid #eee;
-    font-size: 16px;
-    color: #333;
-    transition: background-color 0.2s ease;
+.back-button {
+  background-color: #e2e8f0;
+  color: #1e40af;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-ul#listarPacientes li:hover {
-    background-color: #f9f9f9;
+.back-button:hover {
+  background-color: #cbd5e1;
 }
 
-ul#listarPacientes li:last-child{
-    border-bottom: none;
+h2 {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 22px;
+  color: #0d47a1;
 }
 
-.patient-item{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
+ul#listarPacientes {
+  padding: 0;
+  list-style: none;
+  margin-top: 20px;
 }
 
-li{
-    background-color: #f1f1f1;
-    margin-bottom: 8px;
-    padding: 8px;
-    border-radius: 6px;
- 
+ul#listarPacientes li {
+  background-color: #f1f5f9;          
+  padding: 18px 22px;                 
+  margin-bottom: 14px;               
+  border-radius: 15px;                
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); 
+  font-size: 16px;
+  line-height: 1.5;
+  display: flex;                     
+  justify-content: space-between;   
+  align-items: center;
 }
 
-ul#listarPacientes{
-    padding: 0;
-    justify-content: center;
+.patient-item button {
+  background-color: #d9534f;
+  color: white;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(217, 83, 79, 0.4);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.patient-item button:hover {
+  background-color: #b23027;
+  transform: translateY(-2px);
+}

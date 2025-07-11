@@ -9,32 +9,34 @@
 </head>
 <body ng-controller="QuartoController as vm">
 
-
   <div class="container">
     <button class="back-button" onclick="window.history.back()">Voltar</button>
-    <div>
-         <h1>Quartos</h1>
+    
+    <h2>Lista de Quartos</h2>
 
-         <input type="text" ng-model="vm.filtro" placeholder="Buscar por código ou especialidade">
+    <input type="text" ng-model="vm.filtro" placeholder="Buscar por código ou especialidade" />
+
+    <div class="quarto-list">
+<div class="quarto-card" ng-repeat="quarto in vm.quartosDisponiveis | filter:vm.filtrarQuartos | orderBy:'id'">
+  <h3>Quarto ID: {{ quarto.id }}</h3>
+  <p><strong>ID da Ala:</strong> {{ quarto.alaId || 'Não atribuída' }}</p>
+  <p><strong>Código:</strong> {{ quarto.codigo }}</p>
+  <p><strong>Especialidade:</strong> {{ quarto.specialty }}</p>
+  <p><strong>Status da Ala:</strong> {{ quarto.status || 'Indefinido' }}</p>
+  <br>
+  <p><strong>Leitos</strong></p>
+  <ul>
+    <li ng-repeat="leito in quarto.leitos">
+      ID: {{ leito.id }}   Status: {{ leito.status }}
+    </li>
+  </ul>
+
+  <button ng-click="vm.excluirQuarto(quarto.id)">Excluir Quarto</button>
+</div>
+
     </div>
-    <ul>
-   
-      <li ng-repeat="quarto in vm.quartosDisponiveis | filter:vm.filtrarQuartos">
-        <strong>Quarto: {{quarto.codigo}} - Especialidade: {{quarto.specialty}}</strong>
-
-        <ul>
-          <li ng-repeat="leito in quarto.leitos" >
-            Leito ID: {{leito.id}} <br>Status: {{leito.status}}
-          </li>
-        </ul>
-
-        <button ng-click="vm.excluirQuarto(quarto.id)">Excluir Quarto</button>
-      </li>
-    </ul>
-
   </div>
 
   <script src="../../../dist/bundle.js"></script>
-  
 </body>
 </html>

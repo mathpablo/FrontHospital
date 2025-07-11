@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-br" ng-app="internmentLogModule">
+<html lang="pt-BR" ng-app="internmentLogModule">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Internações</title>
-  <link rel="stylesheet" href="internment.css">
+  <link rel="stylesheet" href="internment.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
 </head>
 <body ng-controller="InternmentLogController as vm">
 
   <div class="container">
+   
     <button class="back-button" onclick="window.history.back()">Voltar</button>
-    <h1>Menu de Internações</h1>
-
+    <h1>Central de Internações</h1>
     <div class="menu">
       <button ng-click="vm.selecionar('internar')">Internar Paciente</button>
       <button ng-click="vm.selecionar('alta')">Dar Alta</button>
@@ -20,8 +20,8 @@
       <button ng-click="vm.selecionar('especialidade')">Por Especialidade</button>
       <button ng-click="vm.selecionar('historicoLeito')">Histórico por Leito</button>
     </div>
-    
-    <div ng-show="vm.tela === 'internar'" class="internar">
+
+    <div ng-show="vm.tela === 'internar'">
       <h2>Internar Paciente</h2>
       <input type="number" ng-model="vm.patientId" placeholder="ID do Paciente">
       <input type="text" ng-model="vm.specialty" placeholder="Especialidade">
@@ -34,63 +34,80 @@
       <button ng-click="vm.darAlta()">Dar Alta</button>
     </div>
 
-    <div ng-show="vm.tela === 'ativos'">
+<div ng-show="vm.tela === 'ativos'">
   <h2>Internações Ativas</h2>
   <ul>
     <li ng-repeat="i in vm.internacoesAtivas">
+      <strong>ID da Internação:</strong> {{ i.id }}<br>
       <strong>Paciente:</strong> {{ i.patient.name }}<br>
-      <strong>Data de Nascimento:</strong> {{ i.patient.dataNascimento }}<br>
       <strong>Especialidade:</strong> {{ i.leito.specialty }}<br>
-      <strong>Leito:</strong> {{ i.leito.codigo }} ({{ i.leito.status }})<br>
-      <strong>Data de Internamento:</strong> {{ i.dateInternamento | date:'dd/MM/yyyy HH:mm' }}<br>
-      <strong>Data de Alta:</strong> 
-      <span ng-if="i.dataAlta">{{ i.dataAlta | date:'dd/MM/yyyy HH:mm' }}</span>
-      <span ng-if="!i.dataAlta">Ainda internado</span>
+      <strong>Data Internamento:</strong> {{ i.dateInternamento | date:'dd/MM/yyyy HH:mm' }}<br>
+      <strong>Leito:</strong> {{ i.leito.codigo }} <br>
     </li>
   </ul>
-</div>
+ </div>
 
 
-    <div ng-show="vm.tela === 'historicoPaciente'">
-  <h2>Histórico de Internações por Paciente</h2>
-  
-  <input type="number" ng-model="vm.pacienteHistoricoId" placeholder="ID do Paciente" />
+
+<div ng-show="vm.tela === 'historicoPaciente'">
+  <h2>Histórico por Paciente</h2>
+
+  <input type="number" ng-model="vm.pacienteHistoricoId" placeholder="ID do Paciente">
   <button ng-click="vm.buscarHistorico()">Buscar</button>
-  
+
   <ul>
     <li ng-repeat="h in vm.historicoPaciente">
-      <strong>Paciente:</strong> {{ h.patientName }} <br />
-      <strong>Hospital:</strong> {{ h.hospitalName }} <br />
-      <strong>Especialidade:</strong> {{ h.specialty }} <br />
-      <strong>Data Internamento:</strong> {{ h.admissionDate | date:'dd/MM/yyyy HH:mm' }} <br />
-      <strong>Data Alta:</strong> {{ h.dischargeDate | date:'dd/MM/yyyy HH:mm' }}
+  <strong>Paciente:</strong> {{ h.patientName }} <br>
+  <strong>Especialidade:</strong> {{ h.specialty }} <br>
+  <strong>Data Internamento:</strong> {{ h.admissionDate | date:'dd/MM/yyyy HH:mm' }} <br>
+  <strong>Data Alta:</strong> 
+  <span ng-if="h.dischargeDate">{{ h.dischargeDate | date:'dd/MM/yyyy HH:mm' }}</span>
+  <span ng-if="!h.dischargeDate">Ainda internado</span> <br>
+  <strong>Hospital:</strong> {{ h.hospitalName }} <br>
+  <strong>Quarto:</strong> {{ h.roomCodigo }} <br>
+  <strong>Leito:</strong> {{ h.leitoCodigo }} <br>
+  <strong>Dias Internados:</strong> {{ vm.calcularDiasInternados(h) }} 
+</li>
+
+  </ul>
+</div>
+
+<div ng-show="vm.tela === 'historicoLeito'">
+  <h2>Histórico por Leito</h2>
+  <input type="text" ng-model="vm.codigoLeito" placeholder="Código do Leito">
+  <button ng-click="vm.buscarHistoricoLeito()">Buscar</button>
+
+  <ul>
+    <li ng-repeat="h in vm.historicoLeito">
+      <strong>Paciente:</strong> {{ h.patientName }}<br>
+      <strong>Especialidade:</strong> {{ h.specialty }}<br>
+      <strong>Leito:</strong> {{ h.codigo }}<br>
+      <strong>Data de Internamento:</strong> {{ h.dataInternamento }} {{ h.horaInternamento }}<br>
+      <strong>Data de Alta:</strong> {{ h.dataAlta }} {{ h.horaAlta }}<br>
+      <strong>Hospital:</strong> {{ h.hospitalName }}<br>
     </li>
   </ul>
 </div>
 
+ <div ng-show="vm.tela === 'especialidade'">
+  <h2>Pacientes por Especialidade</h2>
+  <ul>
+    <li ng-repeat="p in vm.porEspecialidade">
+      <strong>Paciente: </strong> {{ p.patientName }}<br>
+      <strong>Especialidade: </strong> {{ p.specialty }} <br>
+      <strong>Data internamento: </strong> {{ p.dataInternamento | date:'dd/MM/yyyy HH:mm' }}<br>
+      <strong>Dias Internado: </strong> {{ p.diasInternados }}  <br>
+    </li>
+  </ul>
+</div>
 
-    <div ng-show="vm.tela === 'especialidade'">
-      <h2>Pacientes por Especialidade</h2>
-      <ul>
-        <li ng-repeat="p in vm.porEspecialidade">
-          {{ p.patientName }} <br>{{ p.specialty }} <br>{{ p.diasInternados }} dias internado
-        </li>
-      </ul>
+    <div class="pagination" ng-show="vm.totalPages > 1">
+      <button ng-disabled="vm.paginaAtual === 0" ng-click="vm.buscarHistorico(vm.paginaAtual - 1)">Anterior</button>
+      <span>Página {{ vm.paginaAtual + 1 }} de {{ vm.totalPages }}</span>
+      <button ng-disabled="vm.paginaAtual >= vm.totalPages - 1" ng-click="vm.buscarHistorico(vm.paginaAtual + 1)">Próxima</button>
     </div>
-
-    <div ng-show="vm.tela === 'historicoLeito'">
-      <h2>Histórico por Leito</h2>
-      <input type="text" ng-model="vm.codigoLeito" placeholder="Código do Leito">
-      <button ng-click="vm.buscarHistoricoLeito()">Buscar</button>
-      <ul>
-        <li ng-repeat="h in vm.historicoLeito">
-          {{ h.patientName }} <br>{{ h.specialty }} <br>{{ h.dataInternamento }}
-        </li>
-      </ul>
-    </div>
-
   </div>
 
-   <script src="../../../dist/bundle.js"></script>
+  <script src="../../../dist/bundle.js"></script>
 </body>
 </html>

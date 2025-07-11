@@ -29,9 +29,9 @@ export class LeitoController {
       });
   }
 
-  atualizarStatus(): void {
+atualizarStatus(): void {
   if (this.leitoId != null && this.novoStatus) {
-    this.$http.put(`http://localhost:8080/leitos/${this.leitoId}/status`, { status: this.novoStatus })
+this.$http.put(`http://localhost:8080/leitos/leito/${this.leitoId}/status?status=${this.novoStatus}`, null)
       .then(() => {
         alert('Status atualizado com sucesso!');
         this.listarQuantidades(); 
@@ -44,6 +44,7 @@ export class LeitoController {
     alert('Preencha o ID do leito e o novo status.');
   }
 }
+
 
   excluirLeito(): void {
   if (this.idParaExcluir != null) {

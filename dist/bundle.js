@@ -49882,6 +49882,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   AlaController: () => (/* binding */ AlaController)
 /* harmony export */ });
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var AlaController = /** @class */ (function () {
     function AlaController($http, $window) {
         this.$http = $http;
@@ -49891,9 +49902,16 @@ var AlaController = /** @class */ (function () {
         this.quantidadeQuartos = null;
         this.quantidadeLeitosPorQuartos = null;
         this.idParaExcluir = null;
+        this.alas = [];
+        this.alaEditando = null; // usado para edição
+        this.listarAlas();
     }
     AlaController.prototype.criarAla = function () {
-        if (this.hospitalId != null && this.specialty && this.quantidadeQuartos != null && this.quantidadeLeitosPorQuartos != null) {
+        var _this = this;
+        if (this.hospitalId != null &&
+            this.specialty &&
+            this.quantidadeQuartos != null &&
+            this.quantidadeLeitosPorQuartos != null) {
             var novaAla = {
                 hospitalId: this.hospitalId,
                 specialty: this.specialty,
@@ -49903,6 +49921,8 @@ var AlaController = /** @class */ (function () {
             this.$http.post('http://localhost:8080/alas/create', novaAla)
                 .then(function () {
                 alert('Ala criada com sucesso!');
+                _this.limparFormulario();
+                _this.listarAlas();
             })
                 .catch(function (error) {
                 console.error('Erro ao criar ala:', error);
@@ -49912,11 +49932,13 @@ var AlaController = /** @class */ (function () {
             alert('Preencha todos os campos para criar uma ala.');
         }
     };
-    AlaController.prototype.excluirAla = function () {
-        if (this.idParaExcluir != null) {
-            this.$http.delete("http://localhost:8080/alas/ala/".concat(this.idParaExcluir))
+    AlaController.prototype.excluirAlaDireto = function (id) {
+        var _this = this;
+        if (confirm('Deseja realmente excluir esta Ala?')) {
+            this.$http.delete("http://localhost:8080/alas/ala/".concat(id))
                 .then(function () {
                 alert('Ala excluída com sucesso!');
+                _this.listarAlas();
             })
                 .catch(function (error) {
                 console.error('Erro ao excluir ala:', error);
@@ -49931,9 +49953,50 @@ var AlaController = /** @class */ (function () {
                 }
             });
         }
-        else {
-            alert('Informe o ID da Ala para excluir.');
+    };
+    AlaController.prototype.listarAlas = function () {
+        var _this = this;
+        this.$http.get('http://localhost:8080/alas/listar-alas')
+            .then(function (response) {
+            _this.alas = response.data;
+        })
+            .catch(function (error) {
+            console.error('Erro ao listar alas:', error);
+            alert('Erro ao carregar alas.');
+        });
+    };
+    AlaController.prototype.abrirEdicaoAla = function (ala) {
+        this.alaEditando = __assign({}, ala);
+    };
+    AlaController.prototype.salvarEdicao = function () {
+        var _this = this;
+        if (!this.alaEditando || !this.alaEditando.id) {
+            alert('Nenhuma ala selecionada para edição.');
+            return;
         }
+        var dadosAtualizados = {
+            quantidadeQuartos: this.alaEditando.quantidadeQuartos,
+            quantidadeLeitosPorQuartos: this.alaEditando.quantidadeLeitosPorQuartos
+        };
+        this.$http.put("http://localhost:8080/alas/editar/".concat(this.alaEditando.id), dadosAtualizados)
+            .then(function () {
+            alert('Ala atualizada com sucesso!');
+            _this.alaEditando = null;
+            _this.listarAlas();
+        })
+            .catch(function (error) {
+            console.error('Erro ao editar ala:', error);
+            alert('Erro ao salvar edição da ala.');
+        });
+    };
+    AlaController.prototype.cancelarEdicao = function () {
+        this.alaEditando = null;
+    };
+    AlaController.prototype.limparFormulario = function () {
+        this.hospitalId = null;
+        this.specialty = '';
+        this.quantidadeQuartos = null;
+        this.quantidadeLeitosPorQuartos = null;
     };
     AlaController.prototype.voltar = function () {
         this.$window.location.href = '../../homepage.html';
@@ -50137,7 +50200,14 @@ var InternmentController = /** @class */ (function () {
         this.$http = $http;
         this.vm = this;
         this.vm.tela = '';
+        this.vm.calcularDiasInternados = this.calcularDiasInternados.bind(this);
     }
+    InternmentController.prototype.calcularDiasInternados = function (h) {
+        var entrada = new Date(h.admissionDate).getTime();
+        var saida = h.dischargeDate ? new Date(h.dischargeDate).getTime() : Date.now();
+        var diffMs = saida - entrada;
+        return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    };
     InternmentController.prototype.selecionar = function (tela) {
         this.vm.tela = tela;
         if (tela === 'ativos')
@@ -50147,23 +50217,39 @@ var InternmentController = /** @class */ (function () {
     };
     InternmentController.prototype.internar = function () {
         var data = { patientId: this.vm.patientId, specialty: this.vm.specialty };
-        this.$http.post('http://localhost:8080/internacoes/internar', data)
-            .then(function () { return alert("Internado!"); });
+        this.$http.post('http://localhost:8080/internar/internar-paciente', data)
+            .then(function () {
+            alert("Internado!");
+        })
+            .catch(function (error) {
+            var _a;
+            if (error.status === 409) {
+                alert("Paciente já internado.");
+            }
+            else {
+                alert("Erro ao internar paciente: " + (((_a = error.data) === null || _a === void 0 ? void 0 : _a.message) || error.statusText));
+            }
+        });
     };
     InternmentController.prototype.darAlta = function () {
-        this.$http.put("http://localhost:8080/internacoes/alta/".concat(this.vm.internmentLogId), {})
+        this.$http.put("http://localhost:8080/internar/alta/".concat(this.vm.internmentLogId), {})
             .then(function () { return alert("Alta dada!"); });
     };
     InternmentController.prototype.carregarAtivos = function () {
         var _this = this;
-        this.$http.get('http://localhost:8080/internacoes/ativos')
+        this.$http.get('http://localhost:8080/internar/ativos')
             .then(function (res) { return _this.vm.internacoesAtivas = res.data; });
     };
-    InternmentController.prototype.buscarHistorico = function () {
+    InternmentController.prototype.buscarHistorico = function (pagina) {
         var _this = this;
-        this.$http.get("http://localhost:8080/internacoes/historico/paciente/".concat(this.vm.pacienteHistoricoId))
+        if (pagina === void 0) { pagina = 0; }
+        var id = this.vm.pacienteHistoricoId;
+        var url = "http://localhost:8080/internar/historico/paciente/".concat(id, "?page=").concat(pagina, "&size=2");
+        this.$http.get(url)
             .then(function (res) {
             _this.vm.historicoPaciente = res.data.content;
+            _this.vm.totalPages = res.data.totalPages;
+            _this.vm.paginaAtual = res.data.number;
         })
             .catch(function (err) {
             console.error(err);
@@ -50172,12 +50258,12 @@ var InternmentController = /** @class */ (function () {
     };
     InternmentController.prototype.listarEspecialidade = function () {
         var _this = this;
-        this.$http.get('http://localhost:8080/internacoes/ativos/por-especialidade')
+        this.$http.get('http://localhost:8080/internar/ativos/por-especialidade')
             .then(function (res) { return _this.vm.porEspecialidade = res.data; });
     };
     InternmentController.prototype.buscarHistoricoLeito = function () {
         var _this = this;
-        this.$http.get("http://localhost:8080/internacoes/historico/leito/".concat(this.vm.codigoLeito))
+        this.$http.get("http://localhost:8080/internar/historico/leito/".concat(this.vm.codigoLeito))
             .then(function (res) { return _this.vm.historicoLeito = res.data; });
     };
     InternmentController.$inject = ['$http'];
@@ -50244,7 +50330,7 @@ var LeitoController = /** @class */ (function () {
     LeitoController.prototype.atualizarStatus = function () {
         var _this = this;
         if (this.leitoId != null && this.novoStatus) {
-            this.$http.put("http://localhost:8080/leitos/".concat(this.leitoId, "/status"), { status: this.novoStatus })
+            this.$http.put("http://localhost:8080/leitos/leito/".concat(this.leitoId, "/status?status=").concat(this.novoStatus), null)
                 .then(function () {
                 alert('Status atualizado com sucesso!');
                 _this.listarQuantidades();
@@ -50338,12 +50424,15 @@ var PatientController = /** @class */ (function () {
     };
     PatientController.prototype.adicionarPaciente = function () {
         var _this = this;
+        var _a;
         console.log('Paciente antes de enviar:', this.novoPaciente);
-        var dataCorrigida = this.novoPaciente.dataNascimento.replace(/\//g, '-');
+        // Substitui todas as barras "/" por traços "-"
+        var dataCorrigida = this.novoPaciente.dataNascimento.replace(/\//g, '-').trim();
         var pacienteParaEnviar = {
-            name: this.novoPaciente.name,
+            name: ((_a = this.novoPaciente.name) === null || _a === void 0 ? void 0 : _a.trim()) || '',
             dataNascimento: dataCorrigida
         };
+        console.log('Enviando JSON:', pacienteParaEnviar);
         this.$http.post('http://localhost:8080/pacientes/create', pacienteParaEnviar)
             .then(function () {
             alert('Paciente cadastrado com sucesso!');
@@ -50351,7 +50440,28 @@ var PatientController = /** @class */ (function () {
             _this.listarPacientes();
         })
             .catch(function (error) {
-            console.error('Erro ao cadastrar paciente:', error);
+            alert('Erro ao cadastrar paciente.');
+            console.error('Erro ao adicionar paciente:', error);
+        });
+    };
+    PatientController.prototype.deletarPaciente = function (id) {
+        var _this = this;
+        this.$http.delete("http://localhost:8080/pacientes/".concat(id))
+            .then(function () {
+            alert('Paciente deletado com sucesso');
+            _this.listarPacientes();
+        })
+            .catch(function (error) {
+            if (error.status === 409) {
+                alert('Paciente está internado e não pode ser deletado.');
+            }
+            else if (error.status === 404) {
+                alert('Paciente não encontrado.');
+            }
+            else {
+                alert('Erro ao deletar paciente.');
+            }
+            console.error('Erro ao deletar paciente:', error);
         });
     };
     PatientController.$inject = ['$http'];

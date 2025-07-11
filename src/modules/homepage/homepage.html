@@ -1,32 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-br" ng-app="meuApp" >
+<html lang="pt-br" ng-app="meuApp">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Central de Atendimento</title>
   <link rel="stylesheet" href="src/modules/homepage/homepage.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body ng-controller="HomePageController as vm">
-<div>
-  <div class="header"> 
-    <h1 class="hospital-name">Hospital Vida e Saúde</h1> 
-    <p class="mensage">{{ vm.message }}</p>
-  </div>
 
-  <div class="buttons">
-    <button ng-click="vm.navigate('ala')">Alas</button>
-    <button ng-click="vm.navigate('hospitais')">Hospital</button>
-    <button ng-click="vm.navigate('internações')">Internações</button>
-    <button ng-click="vm.navigate('leito')">Leitos</button>
-    <button ng-click="vm.navigate('paciente')">Paciente</button>  
-    <button ng-click="vm.navigate('quartos')">Quartos</button>
-  </div>
-</div>
+  <main>
+    <header>
+      <h1 class="hospital-name">Hospital Vida e Saúde</h1>
+      <p class="message">{{ vm.message }}</p>
+    </header>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
-<script src="dist/homepage.controller.js"></script>
-<script src="dist/homepage.js"></script>
-<script src="dist/app.js"></script>
+    <nav class="navigation-buttons">
+      <button ng-click="vm.navigate('ala')"><i class="fas fa-building"></i> Alas</button>
+      <button ng-click="vm.navigate('hospitais')"><i class="fas fa-hospital-alt"></i> Hospital</button>
+      <button ng-click="vm.navigate('internações')"><i class="fas fa-procedures"></i> Internações</button>
+      <button ng-click="vm.navigate('leito')"><i class="fas fa-bed"></i> Leitos</button>
+      <button ng-click="vm.navigate('paciente')"><i class="fas fa-user-injured"></i> Pacientes</button>
+      <button ng-click="vm.navigate('quartos')"><i class="fas fa-door-open"></i> Quartos</button>
+    </nav>
+  </main>
 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <script src="dist/homepage.controller.js"></script>
+  <script src="dist/homepage.js"></script>
+  <script src="dist/app.js"></script>
 </body>
 </html>

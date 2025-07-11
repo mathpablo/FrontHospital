@@ -1,118 +1,122 @@
-html, body {
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #006699;
   margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(90deg, rgb(83, 163, 255),#b3e5fc, white );
-  height: 100%;
+  padding: 20px;
+  color: #333;
 }
 
-body{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding-top: 30px;
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
-.header{
-   text-align: center; 
+h1, h2, h3 {
+  color: #1e40af;
+  font-weight: 600;
+  margin-bottom: 25px;
 }
 
-.buttons{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 10px;
-    justify-content: center;
-    width: 80%;
-    max-width: 600px;
+h2 {
+  margin-top: 40px;
 }
 
-button{
-    padding: 4px 4px;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    background-color: #ccc;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.4s, transform 0.2s;
-}
-
-button :hover{
-    background-color: #005f8c;
-    transform: translateY(-2px);
-}
-
-form label{
-    width: 100%;
-    padding: 8px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-}
-
-ul{
-    list-style: none;
-    padding: 0;
-}
-
-li{
-    background-color: #f1f1f1;
-    margin-bottom: 8px;
-    padding: 8px;
-    border-radius: 6px;
-}
-
-.container{
-    max-width: 600px;
-    width: 90%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, alpha.2s);
-}
-
-
-.quarto-item{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-}
-
-.quarto-item button{
-     background-color: #ccc;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.hospital-item button :hover{
-    background-color: #ccc;
-}
-
-input[type="text"] {
-  width: 300px;
-  padding: 10px 15px;
+.form-group {
   margin-bottom: 20px;
-  border: 2px solid #000000;
-  border-radius: 25px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
   font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: #1e40af;
   outline: none;
-  transition: 0.3s;
 }
 
-input[type="text"]:focus {
-  border-color: #000000;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+button {
+  background-color: #1e40af;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  margin: 10px 10px 20px 0;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(30, 64, 175, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-h1{
-    padding: 0;
-    align-items: center;
+button:hover {
+  background-color: #1a3aaf;
+  transform: translateY(-2px);
 }
 
+.back-button {
+  background-color: #e2e8f0;
+  color: #1e40af;
+  font-weight: bold;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+.back-button:hover {
+  background-color: #cbd5e1;
+}
 
+.quarto-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.quarto-card {
+  background: #eef6fc;
+  border-radius: 15px;
+  padding: 20px;
+  width: 260px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+
+.quarto-card:hover {
+  transform: translateY(-5px);
+}
+
+.quarto-card h3 {
+  color: #1e40af;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.quarto-card p {
+  margin: 6px 0;
+  color: #333;
+  font-size: 15px;
+}
